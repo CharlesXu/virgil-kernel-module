@@ -1,1 +1,0 @@
-# virgil-kernel-module
