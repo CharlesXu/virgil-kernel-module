@@ -36,7 +36,7 @@ System consists of next elements:
 
 ##<a name="build-prerequisites"></a>Build prerequisites
 
-* Linux kernel version in 3.18.x - 4.2.x
+* Linux kernel version in 3.18.x - 4.4.x
 * Packages for kernel development
 * [CMake 3.2+](https://cmake.org/download/)
 
