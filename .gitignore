@@ -1,0 +1,26 @@
+ext/
+build/
+CMakeFiles/
+CMakeTmp/
+nbproject/
+.tmp_versions
+user-space-service/nbproject
+docs/html
+
+CMakeCache.txt
+cmake_install.cmake
+
+*.ko*
+*.o*
+*.log
+*.mod.*
+*.order
+*.json
+*.symvers
+*.db
+.cproject
+.project
+virgil-service
+
+# Do not ingnore next elements
+!scripts/build

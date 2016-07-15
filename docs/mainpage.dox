@@ -1,0 +1,6 @@
+/**
+ * \mainpage Virgil Kernel Module
+ *
+ * The aim of this project is to provide possibility to use EC cryptography and Virgil Infrastructure inside of Linux Kernel. And also it provides helpers for IEEE1609.2  implementation.
+ *
+ */
