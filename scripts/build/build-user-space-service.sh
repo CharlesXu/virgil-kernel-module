@@ -6,7 +6,7 @@ VIRGIL_SERVICE_APP="virgil-service"
 BIN_PATH="/usr/bin"
 
 # Build user mode application
-pushd "${SCRIPT_FOLDER}/../user-space-service/"
+pushd "${SCRIPT_FOLDER}/../../user-space-service/"
 	cmake .
 	make -j9
 
