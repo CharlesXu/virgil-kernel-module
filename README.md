@@ -12,7 +12,7 @@ The aim of this project is to provide possibility to use Eliptic Curve cryptogra
 * [General structure](#structure)
 * [Build prerequisites](#build-prerequisites)
 * [Build inside of OpenWrt](#build-openwrt)
-[//]: # (* [Build module for current OS](#build-current-os))
+* [Build module for current OS](#build-current-os)
 * [API](#api)
 	* [Crypto](#api-crypto)
 	* [Certificates](#api-certificates)
@@ -36,9 +36,9 @@ System consists of next elements:
 
 ##<a name="build-prerequisites"></a>Build prerequisites
 
-* Linux kernel version in 3.18.x
+* Linux kernel version in 3.18.x - 4.2.x
 * Packages for kernel development
-* CMake 3.1+
+* [CMake 3.2+](https://cmake.org/download/)
 
 ##<a name="build-openwrt"></a>Build inside of OpenWrt
 
@@ -103,7 +103,31 @@ Example:
 # insmod /lib/modules/<your version of kernel>/virgil-kernel-test.ko
 ```
 
-[//]: # (##<a name="build-current-os"></a>Build module for current OS TODO:)
+##<a name="build-current-os"></a>Build module for current OS
+
+### 1. Clone current repository
+```shell
+git clone https://github.com/VirgilSecurity/virgil-kernel-module.git
+```
+
+### 2. Prepare libraries
+```shell
+<virgil-kernel directory>/scripts/prepare.sh
+```
+
+### 3. Install credentials
+```shell
+cd <virgil-kernel directory>/integration/test-credentials/
+
+sudo cp _vpasswd /root/.vpasswd
+sudo cp _vprivkey /root/.vprivkey
+sudo cp _vtoken /root/.vtoken
+```
+
+### 4. Build module and start test
+```shell
+<virgil-kernel directory>/scripts/test.sh
+```
 
 ##<a name="api"></a>API
 
