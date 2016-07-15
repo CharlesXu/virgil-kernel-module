@@ -20,6 +20,7 @@ The aim of this project is to provide possibility to use Eliptic Curve cryptogra
 	* [Helpers for IEEE1609.2](#api-ieee1609.2)
 * [Appendix A. Files used by Virgil Kernel Module](#appendix-files)
 * [Appendix B. Create own credentials](#appendix-credentials)
+* [Appendix C. Quick start using Ubuntu 16.04](#appendix-quick-start)
 * [License](#license)
 * [Contacts](#contacts)
 
@@ -243,6 +244,36 @@ To create credentials for your application you need to do:
 * Copy whole string with token and save to `_vtoken`.
 
 Files `_vprivkey`, `_vpasswd` and `_vtoken` should be placed to `/root/` of PC or device with Virgil Kernel Module. And you need to replace `_` by `.` in file names.
+
+##<a name="appendix-quick-start"></a>Appendix C. Quick start using Ubuntu 16.04
+
+```shell
+# Install required packages
+
+sudo apt-get update
+sudo apt-get install git build-essential libcurl4-openssl-dev cmake
+sudo apt-get install linux-headers-$(uname -r)
+
+# Clone repository
+git clone https://github.com/VirgilSecurity/virgil-kernel-module.git
+
+# Install credentials
+cd ./virgil-kernel-module/integration/test-credentials/
+sudo cp _vpasswd /root/.vpasswd
+sudo cp _vprivkey /root/.vprivkey
+sudo cp _vtoken /root/.vtoken
+
+# Prepare libraries
+cd -
+cd ./virgil-kernel-module/scripts/
+./prepare.sh
+
+# Launch test
+./test.sh
+
+# Show results
+cat /var/log/syslog
+```
 
 ##<a name="license"></a>License
 BSD 3-Clause. See [LICENSE](https://github.com/VirgilSecurity/virgil-kernel-module/blob/master/LICENSE) for details.
