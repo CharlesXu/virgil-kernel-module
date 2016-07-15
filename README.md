@@ -47,9 +47,9 @@ System consists of next elements:
 git clone https://github.com/VirgilSecurity/virgil-kernel-module.git
 ```
 
-### 2. Clone OpenWrt 15.05
+### 2. Clone newest OpenWrt
 ```shell
-git clone git://git.openwrt.org/15.05/openwrt.git
+git clone git://github.com/openwrt/openwrt.git
 ```
 
 ### 3. Put make file of Virgil Kernel Module into OpenWrt build-tree
