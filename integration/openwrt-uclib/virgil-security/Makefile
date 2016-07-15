@@ -76,7 +76,7 @@ define Build/Configure
 	echo "set(STAGING_DIR $(STAGING_DIR))" >> "$(PKG_BUILD_DIR)/virgil-sdk-cpp/build/toolchain.cmake";							\
 	echo "" >> "$(PKG_BUILD_DIR)/virgil-sdk-cpp/build/toolchain.cmake";											\
 	cat  "$(PKG_BUILD_DIR)/../../../package/libs/virgil-security/virgil-openwrt.toolchain.cmake.in" >> "$(PKG_BUILD_DIR)/virgil-sdk-cpp/build/toolchain.cmake";	\
-	cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_TOOLCHAIN_FILE="$(PKG_BUILD_DIR)/virgil-sdk-cpp/build/toolchain.cmake"
+	cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DUCLIBC=ON -DCMAKE_TOOLCHAIN_FILE="$(PKG_BUILD_DIR)/virgil-sdk-cpp/build/toolchain.cmake"
 endef
 
 define Build/Compile
