@@ -55,6 +55,7 @@
 /**
  * @brief Create certificate and private key.
  *
+ * @param[in]  ec_type			- Eliptic curve type
  * @param[in] identity         		- identity.
  * @param[in] addition_data      	- key/value array with addition data.
  * @param[out] private_key      	- generated private key.
@@ -63,6 +64,7 @@
  * @return [VIRGIL_OPERATION_OK or VIRGIL_OPERATION_ERROR].
  */
 extern int virgil_certificate_create(
+		int ec_type,
 		const char * identity,
 		kv_container_t addition_data,
 		data_t * private_key,

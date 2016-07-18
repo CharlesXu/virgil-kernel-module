@@ -48,11 +48,16 @@
 #include <virgil/kernel/crypto.h>
 
 /******************************************************************************/
-static __u32 create_keypair_request(void) {
+static __u32 create_keypair_request(int ec_type) {
 	fields_t fields;
+	struct package_field_t fields_ar[1];
 	__u32 res;
+	const __u8 _ec_type = ec_type;
 
-	fields_reset(&fields);
+	fields.count = 1;
+	fields.ar = fields_ar;
+
+	FILL_FIELD_AR(fields_ar[0], VIRGIL_FIELD_CURVE_TYPE, &_ec_type, sizeof(_ec_type));
 
 	SEND_WITH_CHECK(VIRGIL_CMD_CRYPTO_KEYGEN,
 			fields,
@@ -63,7 +68,7 @@ static __u32 create_keypair_request(void) {
 }
 
 /******************************************************************************/
-int virgil_create_keypair(data_t * private_key, data_t * public_key) {
+int virgil_create_keypair(int ec_type, data_t * private_key, data_t * public_key) {
 	__u32 id;
 	fields_t fields;
 	__s16 err_res;
@@ -74,7 +79,7 @@ int virgil_create_keypair(data_t * private_key, data_t * public_key) {
 	NOT_ZERO(public_key);
 
 	// Send request and wait for response
-	REQUEST_CHECK(id, create_keypair_request());
+	REQUEST_CHECK(id, create_keypair_request(ec_type));
 	CHECK(data_waiter_execute(id, &fields, VIRGIL_OPERATION_TIMEOUT_MS));
 
 	// Parse response

@@ -48,6 +48,11 @@ namespace virgil {
             sha512,
             md5
         };
+        
+        enum ecType {
+            nist256,
+            bp256
+        };
     }
 }
 

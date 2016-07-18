@@ -62,6 +62,13 @@ const char * KEY_SUFFIX_SYM = "SYMM_";
 #define KEY_IDENTITY_SIZE (ID_SIZE + KEY_PREFIX_SIZE)
 
 /******************************************************************************/
+static int algotithm2ec_type(int algorithm) {
+	if (algorithm == ALGORITHM_ECDSA_BP256R1_SHA256 || algorithm == ALGORITHM_ECIES_BP256R1) {
+		return EC_BP_256;
+	}
+	return EC_NIST256;
+}
+/******************************************************************************/
 static char calc_char_shift(__u8 ch) {
 	return ch < 0x0A ? '0' : ('A' - 0x0A);
 }
@@ -97,12 +104,13 @@ static void id_composition(cmh_t cmh, const char * prefix,
 }
 
 /******************************************************************************/
-int virgil_ieee1609_create_material(cmh_t cmh, kv_container_t addition_data,
+int virgil_ieee1609_create_material(cmh_t cmh, int algorithm, kv_container_t addition_data,
 		data_t * private_key, data_t * certificate) {
 	char str_id[ID_SIZE];
 	cmh2str(cmh, str_id);
 
 	return virgil_certificate_create(
+			algotithm2ec_type(algorithm),
 			str_id,
 			addition_data,
 			private_key,
@@ -271,7 +279,7 @@ int virgil_ieee1609_cmh_create(cmh_t * cmh) {
 /******************************************************************************/
 int virgil_ieee1609_cmh_gen_keypair(cmh_t cmh, int algorithm,
 		data_t * public_key, data_t * private_key) {
-	return virgil_create_keypair(private_key, public_key);
+	return virgil_create_keypair(algotithm2ec_type(algorithm), private_key, public_key);
 }
 
 /******************************************************************************/

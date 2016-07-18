@@ -48,6 +48,7 @@
 #include <virgil/crypto/VirgilCipher.h>
 
 #include "VirgilStorage.h"
+#include "VirgilCmdCrypto.h"
 
 using namespace virgil::crypto;
 
@@ -137,8 +138,9 @@ VirgilByteArray VirgilCmdCertificates::create(const VirgilCommand & cmd) {
 
     const std::list<VirgilByteArray> _identities(cmd.dataByField(fldIdentity));
     const std::list<VirgilByteArray> _additionData(cmd.dataByField(fldData));
+    const std::list<VirgilByteArray> _curveTypes(cmd.dataByField(fldCurveType));
 
-    if (_identities.size() != 1 || _additionData.size() > 1) {
+    if (_identities.size() != 1 || _additionData.size() > 1 || _curveTypes.size() != 1 || _curveTypes.front().size() < 1) {
         return VirgilByteArray();
     }
 
@@ -156,6 +158,7 @@ VirgilByteArray VirgilCmdCertificates::create(const VirgilCommand & cmd) {
     const std::string _id(bytes2str(_identities.front()));
     CertificateAndKey certificateAndKey(
             VirgilCertificates().createCertificate(
+            static_cast <virgil::kernel::ecType> (_curveTypes.front()[0]),
             _id,
             kIdentityType,
             customData

@@ -56,6 +56,17 @@ using namespace virgil::crypto;
 VirgilByteArray VirgilCmdCrypto::keygen(const VirgilCommand & cmd) {
     LOG("Keygen");
     VirgilKeyPair keypair(VirgilKeyPair::ecNist256());
+
+    const std::list<VirgilByteArray> _curveTypes(cmd.dataByField(fldCurveType));
+
+    if (_curveTypes.size() != 1 || _curveTypes.front().size() < 1) {
+        return VirgilByteArray();
+    }
+    
+    if (_curveTypes.front()[0] == virgil::kernel::bp256) {
+        keypair = VirgilKeyPair(VirgilKeyPair::ecBrainpool256());
+    }
+
     return VirgilCommand(cmdCryptoKeygen, cmd.id())
             .appendData(fldPrivateKey, keypair.privateKey())
             .appendData(fldPublicKey, keypair.publicKey())
@@ -129,11 +140,12 @@ VirgilByteArray VirgilCmdCrypto::encrypt(const VirgilCommand & cmd) {
         std::list<VirgilByteArray>::const_iterator _itPubKey(_publicKeys.begin());
         std::list<VirgilByteArray>::const_iterator _itPubKeyEnd(_publicKeys.end());
         std::list<VirgilByteArray>::const_iterator _itIdentity(_identities.begin());
-        
+
         for (; _itPubKey != _itPubKeyEnd; _itPubKey++, _itIdentity++) {
             try {
                 cipher.addKeyRecipient(*_itIdentity, *_itPubKey);
-            } catch (...) {}
+            } catch (...) {
+            }
         }
     }
 
@@ -186,17 +198,17 @@ VirgilByteArray VirgilCmdCrypto::verify(const VirgilCommand & cmd) {
     if (_dataList.size() != 1 || _signatureList.size() != 1) {
         return VirgilByteArray();
     }
-    
+
     const bool _isCertificateBasedVerify(_certificates.size() == 1);
     const bool _isPubkeyBasedVerify(_publicKeys.size() == 1);
-    
+
     if (!_isCertificateBasedVerify && !_isPubkeyBasedVerify) {
         return VirgilByteArray();
     }
 
     VirgilByteArray res;
     bool _res(false);
-    if (_isCertificateBasedVerify) {        
+    if (_isCertificateBasedVerify) {
         CertificateModel _certificate(Marshaller<CertificateModel>::fromJson(bytes2str(_certificates.front())));
         _res = VirgilSigner().verify(_dataList.front(),
                 _signatureList.front(),

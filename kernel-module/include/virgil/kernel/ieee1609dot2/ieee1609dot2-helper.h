@@ -70,14 +70,16 @@ typedef __u64 cmh_t;
 /**
  * @brief Create crypto material (private key and certificate).
  *
- * @param[in] cmh                  		- crypto material handle.
- * @param[in] addition_data             - key/value array with addition data.
+ * @param[in] cmh                - crypto material handle.
+ * @param[in] algorithm      	 - algorithm for new key and certificate.
+ * @param[in] addition_data      - key/value array with addition data.
  * @param[out] private_key       - private key.
  * @param[out] certificate       - certificate.
  *
  * @return [VIRGIL_OPERATION_OK or VIRGIL_OPERATION_ERROR].
  */
 extern int virgil_ieee1609_create_material(cmh_t cmh,
+		int algorithm,
         kv_container_t addition_data,
         data_t * private_key,
         data_t * certificate);

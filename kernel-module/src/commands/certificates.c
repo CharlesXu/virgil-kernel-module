@@ -51,21 +51,24 @@ const char * KEY_IDENTITY = "v__IdentityKey";
 const char * KEY_PUBLIC_KEY = "v__PublicKeyKey";
 
 /******************************************************************************/
-static __u32 certificate_create_request(const char * identifier,
+static __u32 certificate_create_request(int ec_type,
+		const char * identifier,
 		kv_container_t addition_data) {
 	fields_t fields;
-	struct package_field_t fields_ar[2];
+	struct package_field_t fields_ar[3];
 	__u32 res;
 	data_t serialized_data;
+	const __u8 _ec_type = ec_type;
 
 	virgil_data_reset(&serialized_data);
 
-	fields.count = 2;
+	fields.count = 3;
 	fields.ar = fields_ar;
 	serialized_data = virgil_kv_serialize(&addition_data);
 
 	FILL_FIELD_STR(fields_ar[0], VIRGIL_FIELD_IDENTITY, identifier);
 	FILL_FIELD(fields_ar[1], VIRGIL_FIELD_DATA, serialized_data);
+	FILL_FIELD_AR(fields_ar[2], VIRGIL_FIELD_CURVE_TYPE, &_ec_type, sizeof(_ec_type));
 
 	SEND_WITH_CHECK(VIRGIL_CMD_CERTIFICATE_CREATE,
 			fields,
@@ -78,7 +81,7 @@ static __u32 certificate_create_request(const char * identifier,
 }
 
 /******************************************************************************/
-int virgil_certificate_create(const char * identifier,
+int virgil_certificate_create(int ec_type, const char * identifier,
 		kv_container_t addition_data, data_t * private_key,
 		data_t * certificate) {
 	__u32 id;
@@ -91,7 +94,7 @@ int virgil_certificate_create(const char * identifier,
 	NOT_ZERO(certificate);
 
 	// Send request and wait for response
-	REQUEST_CHECK(id, certificate_create_request(identifier, addition_data));
+	REQUEST_CHECK(id, certificate_create_request(ec_type, identifier, addition_data));
 	CHECK(data_waiter_execute(id, &fields, VIRGIL_OPERATION_TIMEOUT_MS));
 
 	// Clear output data

@@ -74,7 +74,7 @@ static void certificate_life_cycl_test(void) {
 	virgil_data_reset(&getted_certificate);
 
 	TEST_CASE_OK("Create certificate",
-			virgil_certificate_create(identity, addition_data, &private_key, &created_certificate));
+			virgil_certificate_create(EC_NIST256, identity, addition_data, &private_key, &created_certificate));
 
 	TEST_CASE_OK("Get certificate (from Virgil Service)",
 			virgil_certificate_get(identity, &getted_certificate));
@@ -122,10 +122,10 @@ static void certificate_based_crypto_test(void) {
 	data.sz = strlen(text) + 1;
 
 	TEST_CASE_OK("Create certificate for ALICE",
-			virgil_certificate_create(alice_identity, addition_data, &alice_private_key, &alice_certificate));
+			virgil_certificate_create(EC_BP_256, alice_identity, addition_data, &alice_private_key, &alice_certificate));
 
 	TEST_CASE_OK("Create certificate for BOB",
-			virgil_certificate_create(bob_identity, addition_data, &bob_private_key, &bob_certificate));
+			virgil_certificate_create(EC_NIST256, bob_identity, addition_data, &bob_private_key, &bob_certificate));
 
 	TEST_CASE_OK("ALICE encrypts data to BOB",
 			virgil_encrypt_with_cert(1, &bob_certificate, data, &encrypted_data));

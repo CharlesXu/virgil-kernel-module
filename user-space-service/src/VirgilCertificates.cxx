@@ -37,6 +37,7 @@
 #include "VirgilCertificates.h"
 #include "VirgilParams.h"
 #include "helpers/VirgilLog.h"
+#include "VirgilCmdCrypto.h"
 
 #include <virgil/crypto/foundation/VirgilBase64.h>
 #include <virgil/sdk/models/IdentityModel.h>
@@ -55,6 +56,7 @@ VirgilCertificates::~VirgilCertificates() {
 }
 
 CertificateAndKey VirgilCertificates::createCertificate(
+        virgil::kernel::ecType ecType,
         const std::string & identityValue,
         const std::string & identityType,
         const std::map<std::string, VirgilByteArray> & customData) {
@@ -65,7 +67,11 @@ CertificateAndKey VirgilCertificates::createCertificate(
                 identityValue, identityType, appCredentials));
 
         // Create key pair
-        VirgilKeyPair keyPair;
+        VirgilKeyPair keyPair(VirgilKeyPair::ecNist256());
+        
+        if (ecType == virgil::kernel::bp256) {
+            keyPair = VirgilKeyPair::ecBrainpool256();
+        }
 
         Credentials userCredentials(keyPair.privateKey());
 

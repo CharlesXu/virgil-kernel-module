@@ -47,15 +47,20 @@
 #include <virgil/kernel/types.h>
 #include <virgil/kernel/foundation/data.h>
 
+#define EC_NIST256	0	/**< Eliptic curve Nist 256 */
+#define EC_BP_256		1	/**< Eliptic curve Brain Poll 256 */
+
 /**
  * @brief Create key pair.
  *
+ * @param[in]  ec_type			- Eliptic curve type
  * @param[out] private_key    	- generated private key.
  * @param[out] public_key		- generated public key.
  *
  * @return [VIRGIL_OPERATION_OK or VIRGIL_OPERATION_ERROR].
  */
 extern int virgil_create_keypair(
+		int ec_type,
 		data_t * private_key,
 		data_t * public_key);
 

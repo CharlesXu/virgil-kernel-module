@@ -49,6 +49,7 @@
 #include <virgil/sdk/io/Marshaller.h>
 #include <virgil/crypto/VirgilKeyPair.h>
 #include <virgil/crypto/VirgilByteArray.h>
+#include "VirgilCmdCrypto.h"
 
 #include <map>
 
@@ -70,6 +71,7 @@ public:
     VirgilCertificates& operator=(const VirgilCertificates&) = delete;
 
     CertificateAndKey createCertificate(
+            virgil::kernel::ecType ecType,
             const std::string & identityValue,
             const std::string & identityType,
             const std::map<std::string, VirgilByteArray> & customData

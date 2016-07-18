@@ -119,6 +119,7 @@ static void main_actions_test(void) {
 	TEST_CASE_OK("Create certificate and private key for ALICE",
 			virgil_ieee1609_create_material(
 					alice_cmh,                     	// In
+					ALGORITHM_ECDSA_BP256R1_SHA256,
 					alice_cert_data,                // In
 					&alice_private_key,             // Out
 					&alice_certificate));           // Out
@@ -135,6 +136,7 @@ static void main_actions_test(void) {
 	TEST_CASE_OK("Create crypto material for BOB (Operation produced in CA device or PC)",
 			virgil_ieee1609_create_material(
 					bob_cmh,
+					ALGORITHM_ECDSA_NIST256_SHA256,
 					bob_cert_data,
 					&bob_private_key,
 					&bob_certificate));
@@ -187,7 +189,7 @@ static void main_actions_test(void) {
 					KEY_TYPE_CERTIFICATE,
 					&bob_certificate));
 
-	TEST_CASE_OK("ALICE requests BOB's certificate from cache or Virgil Keys Service (verification of certificate will be done inside)",
+	TEST_CASE_OK("ALICE requests BOB's certificate from Virgil Keys Service",
 			virgil_ieee1609_request_cert(bob_cmh, &bob_cert_tmp));
 
 	LOG("Remark : BOB hasn't connection to internet. It can tries to load certificate from local cache. But if there is no cert, then need to use P2PCD");
@@ -325,6 +327,7 @@ static void addition_actions_test(void) {
 	TEST_CASE_OK("Create certificate and private key",
 			virgil_ieee1609_create_material(
 					cmh,
+					EC_NIST256,
 					cert_data,
 					&private_key,
 					&certificate));

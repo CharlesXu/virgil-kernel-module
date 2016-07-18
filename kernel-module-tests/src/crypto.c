@@ -105,10 +105,10 @@ static void encrypt_decrypt_test(void) {
 	LOG("Data to be encrypted : <%s>", text);
 
 	TEST_CASE_OK("Create keys for BOB",
-			virgil_create_keypair(&bob_private_key, &pubkey_ar[0]));
+			virgil_create_keypair(EC_NIST256, &bob_private_key, &pubkey_ar[0]));
 
 	TEST_CASE_OK("Create keys for CARL",
-				virgil_create_keypair(&carl_private_key, &pubkey_ar[1]));
+				virgil_create_keypair(EC_BP_256, &carl_private_key, &pubkey_ar[1]));
 
 	identity_ar[0] = identity_bob;
 	identity_ar[1] = identity_carl;
@@ -153,7 +153,7 @@ static void sign_verify_test(void) {
 	virgil_data_reset(&public_key);
 
 	TEST_CASE_OK("Create key pair",
-			virgil_create_keypair(&private_key, &public_key));
+			virgil_create_keypair(EC_NIST256, &private_key, &public_key));
 
 	TEST_CASE_OK("Sign data with private key",
 			virgil_sign(private_key, data, &signature));
