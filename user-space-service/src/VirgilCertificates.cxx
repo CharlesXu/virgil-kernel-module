@@ -71,6 +71,8 @@ CertificateAndKey VirgilCertificates::createCertificate(
         
         if (ecType == virgil::kernel::bp256) {
             keyPair = VirgilKeyPair::ecBrainpool256();
+        } else if (ecType == virgil::kernel::curve25519) {
+            keyPair = VirgilKeyPair::generate(VirgilKeyPair::Type_EC_M255);
         }
 
         Credentials userCredentials(keyPair.privateKey());

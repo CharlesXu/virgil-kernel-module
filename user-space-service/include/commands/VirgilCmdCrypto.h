@@ -51,7 +51,8 @@ namespace virgil {
         
         enum ecType {
             nist256,
-            bp256
+            bp256,
+            curve25519
         };
     }
 }

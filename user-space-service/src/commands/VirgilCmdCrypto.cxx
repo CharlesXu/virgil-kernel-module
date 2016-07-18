@@ -65,6 +65,8 @@ VirgilByteArray VirgilCmdCrypto::keygen(const VirgilCommand & cmd) {
     
     if (_curveTypes.front()[0] == virgil::kernel::bp256) {
         keypair = VirgilKeyPair(VirgilKeyPair::ecBrainpool256());
+    } else if (_curveTypes.front()[0] == virgil::kernel::curve25519) {
+        keypair = VirgilKeyPair::generate(VirgilKeyPair::Type_EC_M255);
     }
 
     return VirgilCommand(cmdCryptoKeygen, cmd.id())

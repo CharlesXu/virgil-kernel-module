@@ -47,8 +47,9 @@
 #include <virgil/kernel/types.h>
 #include <virgil/kernel/foundation/data.h>
 
-#define EC_NIST256	0	/**< Eliptic curve Nist 256 */
+#define EC_NIST256		0	/**< Eliptic curve Nist 256 */
 #define EC_BP_256		1	/**< Eliptic curve Brain Poll 256 */
+#define EC_25519		2	/**< Eliptic curve 25519 */
 
 /**
  * @brief Create key pair.
