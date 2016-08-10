@@ -134,7 +134,6 @@ endef
 
 define Build/InstallDev	
 	$(INSTALL_DIR) $(1)/usr/include
-	rm -rf $(PKG_BUILD_DIR)/kernel-module/include/virgil/kernel/private	
 	$(CP) $(PKG_BUILD_DIR)/kernel-module/include/virgil $(1)/usr/include
 endef
 
